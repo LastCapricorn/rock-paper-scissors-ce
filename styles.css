@@ -1,0 +1,20 @@
+code {
+  background-color: lightgray;
+  border: 1px outset darkgray;
+  border-radius: 4px;
+  padding: 2px;
+  margin: 0 3px;
+}
+button {
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px outset darkgray;
+  border-radius: 6px;
+}
+button:hover {
+  background-color: gray;
+  color: yellow;
+}
+button:active {
+  border: inset;
+}
