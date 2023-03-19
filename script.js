@@ -1,6 +1,6 @@
-window.onload = () => document.querySelector('#start').addEventListener('click', playGame);
+window.onload = () => document.querySelector('#start').addEventListener('click', game);
 
-function playGame() {
+function game() {
 
   let playerScore = 0;
   let computerScore = 0;
@@ -46,7 +46,7 @@ function playGame() {
       if (checkInput(selection)) {
         validInput = !validInput; // toggle variable to 'true'
       } else {
-        console.warn('Only "rock","paper" or "scissors" as input accepted!');
+        console.warn('Only "rock","paper" or "scissors" as input accepted! (case doesn\'t matter)');
       }
     };
     return selection;
@@ -61,36 +61,36 @@ function playGame() {
     return false;
   }
 
-  function playRound(player, computer) {
+  function playRound(playerSelection, computerSelection) {
     let resultString = "";
     let isWin = false;
     const answer1 = "Rock beats Scissors.";
     const answer2 = "Paper covers Rock.";
     const answer3 = "Scissors cut paper.";
-    const tieString = computer[0].toUpperCase() + computer.slice(1);
+    const tieString = computerSelection[0].toUpperCase() + computerSelection.slice(1);
 
-    if (player === computer) {
+    if (playerSelection === computerSelection) {
       resultString = `It's a tie! ${tieString} vs. ${tieString}`;
       return resultString;
     }
-    if (player === 'rock') {
-      if (computer === 'scissors') {
+    if (playerSelection === 'rock') {
+      if (computerSelection === 'scissors') {
         isWin = true;
         resultString = answer1;
       } else {
         resultString = answer2;
       }
     }
-    if (player === 'paper') {
-      if (computer === 'rock') {
+    if (playerSelection === 'paper') {
+      if (computerSelection === 'rock') {
         isWin = true;
         resultString = answer2;
       } else {
         resultString = answer3;
       }
     }
-    if (player === 'scissors') {
-      if (computer === 'paper') {
+    if (playerSelection === 'scissors') {
+      if (computerSelection === 'paper') {
         isWin = true;
         resultString = answer3;
       } else {
