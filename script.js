@@ -1,85 +1,103 @@
 window.onload = () => document.querySelector('#start').addEventListener('click', playGame);
 
 function playGame() {
-  document.querySelector('#start').toggleAttribute('disabled');
-  const computerSelection = getComputerChoice();
-  const playerSelection = getPlayerChoice().toLowerCase();
-  const roundResult = playRound(playerSelection, computerSelection);
-  console.log(roundResult);
-}
 
-function getComputerChoice() {
-  const computeRandom = Math.floor(Math.random() * 3); // random value 0, 1 or 2
-  let selection = 'rock'; // if computeRandom == 0
-  switch (computeRandom) {
-    case 1:
-      selection = 'paper';
-      break;
-    case 2:
-      selection = 'scissors';
-      break;
+  let playerScore = 0;
+  let computerScore = 0;
+  let endResult;
+
+  for (let rounds = 1; rounds < 6; rounds++) {
+    console.log(`ROUND ${rounds}:`);
+    console.log(playRound(getPlayerChoice().toLowerCase(), getComputerChoice()));
   }
-  return selection;
-}
 
-function getPlayerChoice() {
-  let selection = "";
-  let validInput = false;
-  while (!validInput) { // prompting till valid Input!
-    selection = prompt('Please enter your choice (rock, paper or scissors):');
-    if (checkInput(selection)) {
-      validInput = !validInput;
+  if (playerScore === computerScore) {
+    endResult = "This Game ends in a Tie - "; 
+  } else {
+    if (playerScore > computerScore) {
+      endResult = 'You Win this Game - ';
     } else {
-      console.warn('Only "rock","paper" or "scissors" as input accepted!');
-    }
-  };
-  return selection;
-}
-
-function checkInput(string) {
-  if (string == 'rock' ||
-      string == 'paper' ||
-      string == 'scissors') {
-    return true;
-  };
-  return false;
-}
-
-function playRound(player, computer) {
-  let resultString = "";
-  let isWin = false;
-  const answer1 = "Rock beats Scissors.";
-  const answer2 = "Paper covers Rock.";
-  const answer3 = "Scissors cut paper.";
-  const tieString = computer[0].toUpperCase() + computer.slice(1);
-
-  if (player === computer) {
-    resultString = `It's a tie! ${tieString} vs. ${tieString}`;
-    return resultString;
-  }
-  if (player === 'rock') {
-    if (computer === 'scissors') {
-      isWin = true;
-      resultString = answer1;
-    } else {
-      resultString = answer2;
+      endResult = 'You Lose this Game - ';
     }
   }
-  if (player === 'paper') {
-    if (computer === 'rock') {
-      isWin = true;
-      resultString = answer2;
-    } else {
-      resultString = answer3;
+
+  console.log(endResult + `${playerScore} : ${computerScore} !`);
+  console.log('Click "Play! - Button" to play again');
+
+  function getComputerChoice() {
+    const computeRandom = Math.floor(Math.random() * 3); // random value 0, 1 or 2
+    let selection = 'rock'; // if computeRandom == 0
+    switch (computeRandom) {
+      case 1:
+        selection = 'paper';
+        break;
+      case 2:
+        selection = 'scissors';
+        break;
     }
+    return selection;
   }
-  if (player === 'scissors') {
-    if (computer === 'paper') {
-      isWin = true;
-      resultString = answer3;
-    } else {
-      resultString = answer1;
+
+  function getPlayerChoice() {
+    let selection = "";
+    let validInput = false;
+    while (!validInput) { // prompting till valid Input!
+      selection = prompt('Please enter your choice (rock, paper or scissors):');
+      if (checkInput(selection)) {
+        validInput = !validInput; // toggle variable to 'true'
+      } else {
+        console.warn('Only "rock","paper" or "scissors" as input accepted!');
+      }
+    };
+    return selection;
+  }
+
+  function checkInput(string) {
+    if (string == 'rock' ||
+        string == 'paper' ||
+        string == 'scissors') {
+      return true;
+    };
+    return false;
+  }
+
+  function playRound(player, computer) {
+    let resultString = "";
+    let isWin = false;
+    const answer1 = "Rock beats Scissors.";
+    const answer2 = "Paper covers Rock.";
+    const answer3 = "Scissors cut paper.";
+    const tieString = computer[0].toUpperCase() + computer.slice(1);
+
+    if (player === computer) {
+      resultString = `It's a tie! ${tieString} vs. ${tieString}`;
+      return resultString;
     }
+    if (player === 'rock') {
+      if (computer === 'scissors') {
+        isWin = true;
+        resultString = answer1;
+      } else {
+        resultString = answer2;
+      }
+    }
+    if (player === 'paper') {
+      if (computer === 'rock') {
+        isWin = true;
+        resultString = answer2;
+      } else {
+        resultString = answer3;
+      }
+    }
+    if (player === 'scissors') {
+      if (computer === 'paper') {
+        isWin = true;
+        resultString = answer3;
+      } else {
+        resultString = answer1;
+      }
+    }
+    isWin === true ? playerScore++ : computerScore++;
+    return resultString = isWin ? `You Win! ${resultString}` : `You Lose! ${resultString}`;
   }
-  return resultString = isWin ? `You Win! ${resultString}` : `You Lose! ${resultString}`;
 }
