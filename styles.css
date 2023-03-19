@@ -11,7 +11,7 @@ button {
   border: 2px outset darkgray;
   border-radius: 6px;
 }
-button:hover {
+button:hover:not(button:disabled) {
   background-color: gray;
   color: yellow;
 }
