@@ -51,9 +51,10 @@ function playRound(player, computer) {
   const answer1 = "Rock beats Scissors.";
   const answer2 = "Paper covers Rock.";
   const answer3 = "Scissors cut paper.";
+  const tieString = computer[0].toUpperCase() + computer.slice(1);
 
   if (player === computer) {
-    resultString = `It's a tie! ${player[0].toUpperCase() + player.slice(1)} vs. ${computer[0].toUpperCase() + computer.slice(1)}`;
+    resultString = `It's a tie! ${tieString} vs. ${tieString}`;
     return resultString;
   }
   if (player === 'rock') {
