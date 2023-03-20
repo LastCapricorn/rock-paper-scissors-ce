@@ -6,9 +6,15 @@ function game() {
   let computerScore = 0;
   let endResult;
 
-  for (let rounds = 1; rounds < 6; rounds++) {
+  for (let rounds = 1, playerChoice = null; rounds < 6; rounds++) {
     console.log(`ROUND ${rounds}:`);
-    console.log(playRound(getPlayerChoice().toLowerCase(), getComputerChoice()));
+    playerChoice = getPlayerChoice();
+    if (playerChoice != null) {
+      console.log(playRound(playerChoice.toLowerCase(), getComputerChoice()));
+    } else {
+      console.log('Player quits the game...');
+      break;
+    }
   }
 
   if (playerScore === computerScore) {
@@ -20,7 +26,6 @@ function game() {
       endResult = 'You Lose this Game - ';
     }
   }
-
   console.log(endResult + `${playerScore} : ${computerScore} !`);
   console.log('Click "Play! - Button" to play again');
 
@@ -43,10 +48,10 @@ function game() {
     let validInput = false;
     while (!validInput) { // prompting till valid Input!
       selection = prompt('Please enter your choice (rock, paper or scissors):');
-      if (checkInput(selection)) {
+      if (checkInput(selection) || checkInput(selection) === null) {
         validInput = !validInput; // toggle variable to 'true'
       } else {
-        console.warn('Only "rock","paper" or "scissors" as input accepted! (case doesn\'t matter)');
+        console.warn("Only 'rock','paper' or 'scissors' as input accepted! (case doesn't matter)");
       }
     };
     return selection;
@@ -57,7 +62,9 @@ function game() {
         string == 'paper' ||
         string == 'scissors') {
       return true;
-    };
+    } else if (string === null) {
+      return string;
+    }
     return false;
   }
 
