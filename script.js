@@ -1,4 +1,4 @@
-window.onload = () => document.querySelector('#start').addEventListener('click', game);
+// window.onload = () => document.querySelector('#start').addEventListener('click', game);
 
 function game() {
 
