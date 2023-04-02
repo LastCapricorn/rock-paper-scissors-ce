@@ -1,4 +1,18 @@
-// window.onload = () => document.querySelector('#start').addEventListener('click', game);
+document.getElementById('index-tab').addEventListener('click', () => {
+  playAudioClick();
+  document.getElementById('index-tab').classList.toggle('display-links');
+  document.getElementById('credits').classList.toggle('display-links');
+  document.querySelectorAll('#credits a').forEach( a => a.classList.toggle('display-links'));
+});
+document.querySelectorAll('#credits a').forEach( (a) => a.addEventListener('click', () => {
+  document.getElementById('credits').classList.toggle('display-links');
+}));
+document.querySelectorAll('button').forEach( button => button.addEventListener('click', playAudioClick));
+
+function playAudioClick() {
+  audio = document.getElementsByName('pen-click')[0];
+  audio.play();
+}
 
 function game() {
 

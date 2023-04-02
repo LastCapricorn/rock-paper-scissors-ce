@@ -3,47 +3,53 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
+    <title>Rock Paper Scissors UI</title>
     <link rel="stylesheet" href="./styles.css">
     <script src="./script.js" defer></script>
   </head>
   <body>
     <main id = 'container'>
-      <section id="player-section">
-        <div><h2>Player</h2></div>
-        <div>
-          <button>&#x270A;</button>
-          <button>&#x270B;</button>
-          <button>&#x270C;</button>
+      <section id="machine-section">
+        <div><h2>The Machine</h2></div>
+        <div id="machine-hands">
+          <div>&#x270A;</div>
+          <div>&#x270B;</div>
+          <div>&#x270C;</div>
         </div>
       </section>
       <section id="playground">
-        <aside>
-          <div><h3>Score</h3><p>0</p></div>
-          <div><p>0</p><h3>Score</h3></div>
+        <aside id="score-board">
+          <div id="machine-score"><h3>Score</h3><p>0</p></div>
+          <div id="player-score"><p>0</p><h3>Score</h3></div>
         </aside>
         <header>
           <h1>Rock - Paper - Scissors</h1>
           <h4>(UI - Edition)</h4>
         </header>
-        <aside>
-          <p>Sound Effects from <a href="https://pixabay.com" target="_blank">Pixabay</a></p>
-          <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=100455">scissors</a>
-          <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=36688">rock</a>
-          <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=80916">paper</a>
-          <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=85546">winner</a>
-          <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=94669">loser</a>
-        </aside>
       </section>
-      <section id="machine-section">
-        <div>
-          <div>&#x270A;</div>
-          <div>&#x270B;</div>
-          <div>&#x270C;</div>
+      <section id="player-section">
+        <div id="player-hands">
+          <button>&#x270A;</button>
+          <button>&#x270B;</button>
+          <button>&#x270C;</button>
         </div>
-        <div><h2>Machine</h2></div>
+        <div><h2>You</h2></div>
       </section>
-      <div id="message-fly-in"></div>
+      <aside id="credits">
+        <p id="index-tab">Credits</p>
+        <a href="https://www.theodinproject.com/" target="_blank">The Odin Project</a>
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="https://wesbos.com" target="_blank">Wes Bos</a>
+        <a href="https://fonts.google.com" target="_blank">Google Fonts</a>
+        <a href="https://pixabay.com/sound-effects" target="_blank">Pixabay</a>
+      </aside>
     </main>
+    <div id="message-fly-in"></div>
+    <audio src="./sound/snd_metal_smash-36688.mp3" name="rock"></audio>
+    <audio src="./sound/paper-crinkle-80916.mp3" name="paper"></audio>
+    <audio src="./sound/scissors-quick-cut-100455.mp3" name="scissors"></audio>
+    <audio src="./sound/badass-victory-85546.mp3" name="winner"></audio>
+    <audio src="./sound/wahwahwahwaaaahahahahahaha-94669.mp3" name="loser"></audio>
+    <audio src="./sound/pen-click-99025.mp3" name="pen-click"></audio>
   </body>
 </html>
