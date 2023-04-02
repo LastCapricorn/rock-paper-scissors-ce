@@ -44,6 +44,7 @@ body {
               -5px  5px 18px 12px var(--shadow),
               -5px -5px 18px 12px var(--shadow),
                5px -5px 18px 12px var(--shadow);
+  perspective: 300px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -110,6 +111,13 @@ body {
   box-shadow: 6px 5px 8px 4px var(--shadow);
   text-shadow: 2px 2px 2px var(--shadow);
   animation: fancy-shadow 300ms cubic-bezier(0.6, 0.04, 0.98, 0.355) infinite;
+  animation-play-state: running;
+}
+
+#player-hands button.stop {
+  animation-play-state: paused;
+  filter: blur(2px);
+  filter:sepia(85%);
 }
 
 #player-hands button:hover {
@@ -160,13 +168,12 @@ header {
   position: absolute;
   width: 80px;
   top: 140px;
+  right: 0;
   transform-origin: 100% 18px;
   transform: rotate(-90deg);
-  right: 0px;
   border: 1px solid transparent;
   border-radius: 8px 8px 0 0;
-  transition: all 300ms;
-  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   display: flex;
   flex-flow: column nowrap;
@@ -188,7 +195,7 @@ header {
   color: var(--body-bg);
   font-weight: bold;
   text-align: center;
-  transition: all 300ms;
+  transition: border 300ms;
   transition-timing-function:cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -215,12 +222,11 @@ a:link {
   text-decoration-line: none;
   text-align: center;
   opacity: 0.0;
-  transition: all 300ms;
-  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: opacity 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 #credits a.display-links {
-  opacity: 1.0;
+  opacity: 0.9;
 }
 
 a:visited {
@@ -230,6 +236,33 @@ a:visited {
 a:hover {
   font-weight: bold;
   background-color: var(--yellow);
+}
+
+#message {
+  position: absolute;
+  top: 40%;
+  left: 10%;
+  width: 80%;
+  height: 20%;
+  background-color: #082f0fdf;
+  color: #b06;
+  text-shadow: 3px 2px 4px var(--badass);
+  border-radius: 8px;
+  font-size: 2rem;
+  font-weight: bold;
+  transform-origin: 50%;
+  transform: translateZ(300px);
+  opacity: 0.0;
+  transition: all 600ms ease-in-out;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#message.show {
+  transform: translateZ(0px);
+  opacity: 1.0;
 }
 
 @keyframes fancy-shadow {

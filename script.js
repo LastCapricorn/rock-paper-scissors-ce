@@ -1,124 +1,116 @@
-document.getElementById('index-tab').addEventListener('click', () => {
-  playAudioClick();
-  document.getElementById('index-tab').classList.toggle('display-links');
-  document.getElementById('credits').classList.toggle('display-links');
-  document.querySelectorAll('#credits a').forEach( a => a.classList.toggle('display-links'));
-});
-document.querySelectorAll('#credits a').forEach( (a) => a.addEventListener('click', () => {
-  document.getElementById('credits').classList.toggle('display-links');
-}));
-document.querySelectorAll('button').forEach( button => button.addEventListener('click', playAudioClick));
+'use strict';
 
-function playAudioClick() {
-  audio = document.getElementsByName('pen-click')[0];
-  audio.play();
-}
+(function game() {
 
-function game() {
+  const indexTab = document.getElementById('index-tab');
+  const credits = document.getElementById('credits');
+  const links = credits.querySelectorAll('a');
+  const buttons = document.querySelectorAll('button');
+  const message = document.getElementById('message');
+  const msgPara = document.querySelectorAll('#message p');
+  const playerScore = document.querySelector('#player-score p');
+  const computerScore = document.querySelector('#machine-score p');
 
-  let playerScore = 0;
-  let computerScore = 0;
+  const computerChoice = ['Rock', 'Paper', 'Scissors'];
+  const roundLog = ['Rock beats Scissors.', 'Paper covers Rock.', 'Scissors cut paper.'];
+
+  let plrScore = 0;
+  let cptScore = 0;
+  let msgAudio = '';
   let endResult;
-
-  for (let rounds = 1, playerChoice = null; rounds < 6; rounds++) {
-    console.log(`ROUND ${rounds}:`);
-    playerChoice = getPlayerChoice();
-    if (playerChoice != null) {
-      console.log(playRound(playerChoice.toLowerCase(), getComputerChoice()));
-    } else {
-      console.log('Player quits the game...');
-      break;
-    }
+  
+  buttons.forEach( button => button.addEventListener('click', playRound));
+  
+  indexTab.addEventListener('click', () => {
+    links.forEach( a => a.classList.toggle('display-links'));
+    credits.classList.toggle('display-links');
+    indexTab.classList.toggle('display-links');
+    playAudio('pen-click');
+  });
+  
+  links.forEach( (a) => a.addEventListener('click', () => {
+    credits.classList.remove('display-links');
+  }));
+  
+  function playRound(e) {
+    playAudio('pen-click');
+    buttons.forEach( btn => {
+      btn.removeEventListener('click', playRound)
+      btn.classList.add('stop');
+    });
+    let result = roundResult(e.target.value, computerChoice[Math.floor(Math.random() * 3)]);
+    msgPara[0].textContent = result[0];
+    msgPara[1].textContent = result[1];
+    message.classList.toggle('show');
+    playAudio(msgAudio);
+    setTimeout( () => {
+      message.classList.toggle('show');
+      playerScore.textContent = plrScore;
+      computerScore.textContent = cptScore;
+      buttons.forEach( btn => btn.classList.remove('stop'));
+      buttons.forEach( btn => btn.addEventListener('click', playRound));
+    },2000);
   }
 
-  if (playerScore === computerScore) {
-    endResult = "This Game ends in a Tie - "; 
-  } else {
-    if (playerScore > computerScore) {
-      endResult = 'You Win this Game - ';
-    } else {
-      endResult = 'You Lose this Game - ';
-    }
+  function playAudio(name) {
+    const audio = document.getElementsByName(name)[0];
+    audio.play();
   }
-  console.log(endResult + `${playerScore} : ${computerScore} !`);
-  console.log('Click "Play! - Button" to play again');
-
-  function getComputerChoice() {
-    const computeRandom = Math.floor(Math.random() * 3); // random value 0, 1 or 2
-    let selection = 'rock'; // if computeRandom == 0
-    switch (computeRandom) {
-      case 1:
-        selection = 'paper';
-        break;
-      case 2:
-        selection = 'scissors';
-        break;
-    }
-    return selection;
-  }
-
-  function getPlayerChoice() {
-    let selection = "";
-    let validInput = false;
-    while (!validInput) { // prompting till valid Input!
-      selection = prompt('Please enter your choice (rock, paper or scissors):');
-      if (checkInput(selection) || checkInput(selection) === null) {
-        validInput = !validInput; // toggle variable to 'true'
-      } else {
-        console.warn("Only 'rock','paper' or 'scissors' as input accepted! (case doesn't matter)");
-      }
-    };
-    return selection;
-  }
-
-  function checkInput(string) {
-    if (string == 'rock' ||
-        string == 'paper' ||
-        string == 'scissors') {
-      return true;
-    } else if (string === null) {
-      return string;
-    }
-    return false;
-  }
-
-  function playRound(playerSelection, computerSelection) {
+  
+  function roundResult(playerSelection, computerSelection) {
     let resultString = "";
     let isWin = false;
-    const answer1 = "Rock beats Scissors.";
-    const answer2 = "Paper covers Rock.";
-    const answer3 = "Scissors cut paper.";
-    const tieString = computerSelection[0].toUpperCase() + computerSelection.slice(1);
-
+    
     if (playerSelection === computerSelection) {
-      resultString = `It's a tie! ${tieString} vs. ${tieString}`;
+      resultString = ["It's a tie!", `${playerSelection} vs. ${playerSelection}`];
+      msgAudio = playerSelection.toLowerCase();
       return resultString;
-    }
-    if (playerSelection === 'rock') {
-      if (computerSelection === 'scissors') {
+    }    
+    if (playerSelection === 'Rock') {
+      if (computerSelection === 'Scissors') {
         isWin = true;
-        resultString = answer1;
+        resultString = roundLog[0];
+        msgAudio = 'rock';
       } else {
-        resultString = answer2;
-      }
-    }
-    if (playerSelection === 'paper') {
-      if (computerSelection === 'rock') {
+        resultString = roundLog[1];
+        msgAudio = 'paper';
+      }    
+    }    
+    if (playerSelection === 'Paper') {
+      if (computerSelection === 'Rock') {
         isWin = true;
-        resultString = answer2;
+        resultString = roundLog[1];
+        msgAudio = 'paper';
       } else {
-        resultString = answer3;
-      }
-    }
-    if (playerSelection === 'scissors') {
-      if (computerSelection === 'paper') {
+        resultString = roundLog[2];
+        msgAudio = 'scissors';
+      }    
+    }    
+    if (playerSelection === 'Scissors') {
+      if (computerSelection === 'Paper') {
         isWin = true;
-        resultString = answer3;
+        resultString = roundLog[2];
+        msgAudio = 'scissors';
       } else {
-        resultString = answer1;
-      }
-    }
-    isWin === true ? playerScore++ : computerScore++;
-    return resultString = isWin ? `You Win! ${resultString}` : `You Lose! ${resultString}`;
-  }
-}
+        resultString = roundLog[0];
+        msgAudio = 'rock';
+      }    
+    }    
+    isWin === true ? plrScore++ : cptScore++;
+    return resultString = isWin ? ['You Win!', resultString] : ['You Lose!', resultString];
+  }    
+
+  
+  // if (playerScore === computerScore) {
+  //   endResult = "This Game ends in a Tie - "; 
+  // } else {
+  //   if (playerScore > computerScore) {
+  //     endResult = 'You Win this Game - ';
+  //   } else {
+  //     endResult = 'You Lose this Game - ';
+  //   }
+  // }
+  // console.log(endResult + `${playerScore} : ${computerScore} !`);
+  // console.log('Click "Play! - Button" to play again');
+
+})();
