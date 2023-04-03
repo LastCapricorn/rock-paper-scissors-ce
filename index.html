@@ -8,13 +8,13 @@
     <script src="./script.js" defer></script>
   </head>
   <body>
-    <main id = 'container'>
+    <main id = "container">
       <section id="machine-section">
         <div><h2>The Machine</h2></div>
         <div id="machine-hands">
-          <div>&#x270A;</div>
-          <div>&#x270B;</div>
-          <div>&#x270C;</div>
+          <div data-machine="Rock">&#x270A;</div>
+          <div data-machine="Paper">&#x270B;</div>
+          <div data-machine="Scissors">&#x270C;</div>
         </div>
       </section>
       <section id="playground">
@@ -29,14 +29,14 @@
       </section>
       <section id="player-section">
         <div id="player-hands">
-          <button value="Rock">&#x270A;</button>
-          <button value="Paper">&#x270B;</button>
-          <button value="Scissors">&#x270C;</button>
+          <button data-player="Rock">&#x270A;</button>
+          <button data-player="Paper">&#x270B;</button>
+          <button data-player="Scissors">&#x270C;</button>
         </div>
         <div><h2>You</h2></div>
       </section>
       <aside id="credits">
-        <p id="index-tab">Credits</p>
+        <p id="credits-tab">Credits</p>
         <a href="https://www.theodinproject.com" target="_blank">The Odin Project</a>
         <a href="https://github.com" target="_blank">GitHub</a>
         <a href="https://wesbos.com" target="_blank">Wes Bos</a>
@@ -44,13 +44,20 @@
         <a href="https://pixabay.com/sound-effects" target="_blank">Pixabay</a>
         <a href="https://fonts.google.com" target="_blank">Google Fonts</a>
       </aside>
-      <div id="message" class=""><p>You lose!</p><p>Scissors cuts Paper.</p></div>
+      <div id="message">
+        <p id="info1"></p>
+        <p id="info2"></p>
+      </div>
+      <div id="game-over">
+        <p id="g-o-message"></p>
+        <button id="play-again">Play Again!</button>
+      </div>
     </main>
   </body>
-  <audio src="./sound/snd_metal_smash-36688.mp3" name="rock"></audio>
-  <audio src="./sound/paper-crinkle-80916.mp3" name="paper"></audio>
-  <audio src="./sound/scissors-quick-cut-100455.mp3" name="scissors"></audio>
-  <audio src="./sound/badass-victory-85546.mp3" name="winner"></audio>
-  <audio src="./sound/wahwahwahwaaaahahahahahaha-94669.mp3" name="loser"></audio>
-  <audio src="./sound/pen-click-99025.mp3" name="pen-click"></audio>
+  <audio src="./sound/snd_metal_smash-36688.mp3" data-audio="Rock"></audio>
+  <audio src="./sound/paper-crinkle-80916.mp3" data-audio="Paper"></audio>
+  <audio src="./sound/scissors-quick-cut-100455.mp3" data-audio="Scissors"></audio>
+  <audio src="./sound/badass-victory-85546.mp3" data-audio="Winner"></audio>
+  <audio src="./sound/wahwahwahwaaaahahahahahaha-94669.mp3" data-audio="Loser"></audio>
+  <audio src="./sound/pen-click-99025.mp3" data-audio="Click"></audio>
 </html>

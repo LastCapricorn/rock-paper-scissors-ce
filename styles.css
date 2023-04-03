@@ -1,17 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
 
 :root {
+  --dark-glass: #082f0fdf; 
   --body-bg: #0f3f1f;
   --main-bg: #2f5f3f;
   --shadow: #1f4f2f;
   --badass: #bada55;
-  --text-shadow: #b06;
-  --yellow: #dada55;
+  --pink-red: #b06;
+  --yellow: #fada55;
 }
 
 html {
   box-sizing: border-box;
   font-size: 16px;
+  user-select: none;
 }
 
 *,
@@ -60,6 +62,46 @@ body {
   align-items: center;
 }
 
+#score-board {
+  height: 100%;
+  flex: 1 1 50px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+}      
+
+header {
+  flex: 1 1 80%;
+}    
+
+h1,
+h2,
+h4,
+#machine-score,
+#player-score {
+  text-align: center;
+  text-shadow: 3px 2px 5px var(--pink-red);
+}      
+
+#machine-score p,
+#player-score p {
+  font-size: 5rem;
+  font-weight: bold;
+}      
+
+h1 {
+  font-size: 1.95rem;
+  line-height: 1.3rem;
+}        
+
+h2 {
+  font-size: 1.55rem;
+}        
+
+h4 {
+  line-height: 1.3rem;
+}          
+
 #machine-section,
 #player-section {
   width: 100%;
@@ -101,67 +143,37 @@ body {
 
 #machine-hands div {
   border: 2px groove var(--main-bg);
-  transform: rotate(180deg);
   box-shadow: -6px -5px 8px 4px var(--shadow);
   text-shadow: -2px -2px 2px var(--shadow);
+  transform: rotate(180deg);
+  transition: all 300ms ease-in;
+}  
+
+#machine-hands div.move {
+  transform: rotate(0deg);
+  transform: scale(1.15);
+  animation: fancy-shadow 300ms cubic-bezier(0.6, 0.04, 0.98, 0.355) infinite;
 }
 
 #player-hands button {
   border: 2px ridge var(--main-bg);
   box-shadow: 6px 5px 8px 4px var(--shadow);
   text-shadow: 2px 2px 2px var(--shadow);
-  animation: fancy-shadow 300ms cubic-bezier(0.6, 0.04, 0.98, 0.355) infinite;
-  animation-play-state: running;
-}
-
-#player-hands button.stop {
-  animation-play-state: paused;
-  filter: blur(2px);
-  filter:sepia(85%);
-}
+  transition: all 300ms ease-in;
+}    
 
 #player-hands button:hover {
   cursor: pointer;
-}
+}    
 
-#score-board {
-  height: 100%;
-  flex: 1 1 50px;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-around;
-}
+#player-hands button.move {
+  animation: fancy-shadow 300ms cubic-bezier(0.6, 0.04, 0.98, 0.355) infinite;
+  transform: scale(1.15);
+}      
 
-h1,
-h2,
-h4,
-#machine-score,
-#player-score {
-  text-align: center;
-  text-shadow: 3px 2px 5px var(--text-shadow);
-}
-
-h1 {
-  font-size: 1.95rem;
-  line-height: 1.3rem;
-}
-
-h4 {
-  line-height: 1.3rem;
-}
-
-h2 {
-  font-size: 1.55rem;
-}
-
-#machine-score p,
-#player-score p {
-  font-size: 5rem;
-  font-weight: bold;
-}
-
-header {
-  flex: 1 1 80%;
+#player-hands button.blur {
+  filter: blur(2px) saturate(65%);
+  cursor: default;
 }
 
 #credits {
@@ -169,24 +181,24 @@ header {
   width: 80px;
   top: 140px;
   right: 0;
-  transform-origin: 100% 18px;
-  transform: rotate(-90deg);
-  border: 1px solid transparent;
-  border-radius: 8px 8px 0 0;
-  transition: all 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items:flex-start;
-}
+  border: 1px solid transparent;
+  border-radius: 8px 8px 0 0;
+  transform-origin: 100% 18px;
+  transform: rotate(-90deg);
+  transition: all 300ms ease-in-out;
+
+}  
 
 #credits.display-links {
   transform: rotate(0deg);
   border: 1px solid var(--shadow);
-}
+}  
 
-#index-tab {
+#credits-tab {
   width: 100%;
   border: 1px solid var(--shadow);
   border-radius: 8px 8px 0 0;
@@ -195,74 +207,125 @@ header {
   color: var(--body-bg);
   font-weight: bold;
   text-align: center;
-  transition: border 300ms;
-  transition-timing-function:cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
+}  
 
-#index-tab.display-links {
-  border: none;
-}
-
-#index-tab:hover {
+#credits-tab:hover {
   cursor: pointer;
 }
 
+#credits-tab.display-links {
+  border: none;
+}    
+
+#credits a,
 #credits p {
   font-size: 0.8rem;
-}
+}  
+
+#credits a {
+  visibility: hidden;
+  transition: visibility 300ms ease-in-out;
+}  
+
+#credits a.display-links {
+  visibility: visible;
+}  
 
 a:link {
-  display: inline-block;
   width: 100%;
   margin-bottom: 1px;
   padding: 1px 0;
   background-color: var(--badass);
   color: var(--body-bg);
-  font-size: 0.8rem;
   text-decoration-line: none;
   text-align: center;
-  opacity: 0.0;
-  transition: opacity 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-#credits a.display-links {
-  opacity: 0.9;
-}
+  opacity: 0.8;
+}  
 
 a:visited {
   color: var(--body-bg);
-}
+}  
 
 a:hover {
   font-weight: bold;
   background-color: var(--yellow);
-}
+  opacity: 1;
+}  
 
-#message {
+#message,
+#game-over {
   position: absolute;
   top: 40%;
   left: 10%;
   width: 80%;
   height: 20%;
-  background-color: #082f0fdf;
-  color: #b06;
+  background-color: var(--dark-glass);
+  color: var(--pink-red);
   text-shadow: 3px 2px 4px var(--badass);
-  border-radius: 8px;
+  border: 1px solid var(--yellow);
+  border-radius: 10px;
+  box-shadow: inset  1px  1px 20px -6px var(--pink-red),
+              inset -1px  1px 20px -6px var(--pink-red),
+              inset  1px -1px 20px -6px var(--pink-red),
+              inset -1px -1px 20px -6px var(--pink-red),
+                     1px  1px 20px -6px var(--pink-red),
+                    -1px  1px 20px -6px var(--pink-red),
+                     1px -1px 20px -6px var(--pink-red),
+                    -1px -1px 20px -6px var(--pink-red);
   font-size: 2rem;
   font-weight: bold;
-  transform-origin: 50%;
-  transform: translateZ(300px);
-  opacity: 0.0;
-  transition: all 600ms ease-in-out;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-evenly;
   align-items: center;
 }
 
+#message {
+  transform: translateZ(-600px);
+  opacity: 0.0;
+  transition: all 1250ms ease-in-out;
+  display: flex;
+}  
+
+#game-over {
+  transform: translateZ(300px);
+  opacity: 0.0;
+  transition: all 1750ms ease-in-out;
+}  
+
 #message.show {
+  transform: translateZ(100px);
+  opacity: 1.0;
+}
+
+#game-over.show {
   transform: translateZ(0px);
   opacity: 1.0;
+}
+
+#play-again {
+  font-family: inherit;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1rem;
+  background: none;
+  color: transparent;
+  text-shadow:  1px  1px 0px var(--yellow),
+               -1px  1px 0px var(--yellow),
+               -1px -1px 0px var(--yellow),
+                1px -1px 0px var(--yellow);
+  border: 1px solid var(--yellow);
+  box-shadow: inset  1px  1px 20px -6px var(--pink-red),
+              inset -1px  1px 20px -6px var(--pink-red),
+              inset  1px -1px 20px -6px var(--pink-red),
+              inset -1px -1px 20px -6px var(--pink-red),
+                     1px  1px 20px -6px var(--pink-red),
+                    -1px  1px 20px -6px var(--pink-red),
+                     1px -1px 20px -6px var(--pink-red),
+                    -1px -1px 20px -6px var(--pink-red);
+  border-radius: 10px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
 }
 
 @keyframes fancy-shadow {
